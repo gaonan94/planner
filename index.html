@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f766e" />
+    <title>每日科研·健身·英语规划台</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">K</span>
+          <div>
+            <h1 data-title-key="appTitle">日常规划台</h1>
+            <p id="todayLabel"></p>
+          </div>
+        </div>
+
+        <section class="panel today-panel">
+          <div class="section-head">
+            <h2 data-title-key="overviewTitle">今日概览</h2>
+            <button class="icon-button" id="clearDoneBtn" title="清除已完成任务" aria-label="清除已完成任务">✓</button>
+          </div>
+          <div class="metric-grid">
+            <div>
+              <span class="metric-value" id="researchCount">0</span>
+              <span class="metric-label">科研待办</span>
+            </div>
+            <div>
+              <span class="metric-value" id="fitnessCount">0</span>
+              <span class="metric-label">今日健身</span>
+            </div>
+            <div>
+              <span class="metric-value" id="englishCount">0</span>
+              <span class="metric-label">英语本周</span>
+            </div>
+            <div>
+              <span class="metric-value" id="ideaCount">0</span>
+              <span class="metric-label">科研 idea</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 data-title-key="quickTitle">快速记录</h2>
+          <form id="quickForm" class="stack-form">
+            <label>
+              类型
+              <select id="quickType">
+                <option value="research">科研任务</option>
+                <option value="fitness">健身日程</option>
+                <option value="english">英语学习</option>
+                <option value="idea">科研 idea</option>
+              </select>
+            </label>
+            <label>
+              内容
+              <textarea id="quickText" rows="4" placeholder="写下今天要推进什么，或者刚冒出来的科研想法"></textarea>
+            </label>
+            <button class="primary-button" type="submit">添加</button>
+          </form>
+        </section>
+
+      </aside>
+
+      <section class="workspace">
+        <nav class="tabs" aria-label="记录分类">
+          <button class="tab active" data-tab="research" data-title-key="researchTitle">科研</button>
+          <button class="tab" data-tab="fitness" data-title-key="fitnessTitle">健身</button>
+          <button class="tab" data-tab="english" data-title-key="englishTitle">英语</button>
+          <button class="tab" data-tab="ideas" data-title-key="ideasTitle">科研 Idea</button>
+          <button class="tab" data-tab="settings">设置</button>
+        </nav>
+
+        <section class="view active" id="researchView">
+          <div class="view-heading">
+            <div>
+              <h2 data-title-key="researchHeading">科研推进</h2>
+              <p>每天做什么、短期项目进展、长期目标都放在这里。</p>
+            </div>
+          </div>
+          <div class="two-column">
+            <form id="researchForm" class="panel stack-form">
+              <h3 data-title-key="researchFormTitle">新增科研任务</h3>
+              <label>任务<input id="researchTitle" required placeholder="例如：整理有限元模型边界条件" /></label>
+              <label>层级
+                <select id="researchScope">
+                  <option value="today">今日</option>
+                  <option value="short">短期项目</option>
+                  <option value="long">长期目标</option>
+                </select>
+              </label>
+              <label>备注<textarea id="researchNote" rows="4" placeholder="进展、卡点、下一步"></textarea></label>
+              <button class="primary-button" type="submit">保存任务</button>
+            </form>
+            <div class="list-panel">
+              <div class="list-section">
+                <h3 data-title-key="todayResearchTitle">今日</h3>
+                <div id="todayResearchList" class="item-list"></div>
+              </div>
+              <div class="list-section">
+                <h3 data-title-key="shortResearchTitle">短期项目</h3>
+                <div id="shortResearchList" class="item-list"></div>
+              </div>
+              <div class="list-section">
+                <h3 data-title-key="longResearchTitle">长期目标</h3>
+                <div id="longResearchList" class="item-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="fitnessView">
+          <div class="view-heading">
+            <div>
+              <h2 data-title-key="fitnessHeading">健身与体重</h2>
+              <p>记录训练安排、完成情况和每日体重变化。</p>
+            </div>
+          </div>
+          <div class="two-column">
+            <form id="fitnessForm" class="panel stack-form">
+              <h3 data-title-key="fitnessFormTitle">新增健身记录</h3>
+              <label>日期<input id="fitnessDate" type="date" required /></label>
+              <label>体重 kg<input id="weight" type="number" step="0.1" min="20" max="200" placeholder="例如：55.5" /></label>
+              <label>训练内容<textarea id="workout" rows="4" placeholder="例如：力量训练 45 分钟 + 拉伸"></textarea></label>
+              <label>状态
+                <select id="fitnessMood">
+                  <option value="完成">完成</option>
+                  <option value="计划">计划</option>
+                  <option value="休息">休息</option>
+                </select>
+              </label>
+              <button class="primary-button" type="submit">保存记录</button>
+            </form>
+            <div class="fitness-side">
+              <div class="panel weight-panel">
+                <div class="section-head">
+                  <h3>体重模块</h3>
+                  <span class="status-pill" id="weightTrend">暂无</span>
+                </div>
+                <div class="weight-summary">
+                  <div>
+                    <span class="weight-value" id="latestWeight">--</span>
+                    <span class="metric-label">最新体重 kg</span>
+                  </div>
+                  <div>
+                    <span class="weight-value small" id="weightChange">--</span>
+                    <span class="metric-label">较上一条</span>
+                  </div>
+                </div>
+                <div id="weightList" class="weight-list"></div>
+              </div>
+              <div class="panel">
+                <h3 data-title-key="fitnessListTitle">最近记录</h3>
+                <div id="fitnessList" class="item-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="englishView">
+          <div class="view-heading">
+            <div>
+              <h2 data-title-key="englishHeading">英语学习</h2>
+              <p>每周两次，记录对话话题、新单词和可复用句式。</p>
+            </div>
+            <span class="schedule-pill" id="englishWeeklyHint">本周 0 / 2</span>
+          </div>
+          <div class="two-column">
+            <form id="englishForm" class="panel stack-form">
+              <h3 data-title-key="englishFormTitle">新增英语记录</h3>
+              <label>日期<input id="englishDate" type="date" required /></label>
+              <label>对话话题<input id="englishTopic" required placeholder="例如：介绍自己的研究方向" /></label>
+              <label>新单词<textarea id="englishWords" rows="3" placeholder="word - meaning"></textarea></label>
+              <label>句式<textarea id="englishPatterns" rows="3" placeholder="I am currently working on..."></textarea></label>
+              <label>复盘<textarea id="englishReview" rows="3" placeholder="今天卡在哪里，下次想练什么"></textarea></label>
+              <button class="primary-button" type="submit">保存学习</button>
+            </form>
+            <div class="english-side">
+              <div class="panel">
+                <h3 data-title-key="englishListTitle">学习记录</h3>
+                <div id="englishList" class="item-list"></div>
+              </div>
+              <div class="panel ai-panel">
+                <div class="section-head">
+                  <h3>AI 英语建议</h3>
+                  <span class="status-pill" id="aiStatus">未配置</span>
+                </div>
+                <p class="helper-text">AI 接口和 Key 在“设置 → AI 配置”里统一填写。</p>
+                <label class="compact-form">想让 AI 关注什么
+                  <select id="aiFocus">
+                    <option value="conversation">对话话题和表达自然度</option>
+                    <option value="words">新单词记忆和复习</option>
+                    <option value="patterns">句式升级和替换表达</option>
+                    <option value="research">科研英语表达</option>
+                  </select>
+                </label>
+                <div class="button-row compact-form">
+                  <button id="askAiBtn" type="button">生成建议</button>
+                  <button id="copyAiPromptBtn" type="button">复制提示词</button>
+                </div>
+                <textarea id="aiSuggestion" rows="8" placeholder="这里会显示 AI 给你的英语学习建议。"></textarea>
+                <p class="helper-text">如果还没配置 AI，也可以先复制提示词去 ChatGPT 网页版使用。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="ideasView">
+          <div class="view-heading">
+            <div>
+              <h2 data-title-key="ideasHeading">科研 Idea 捕捉</h2>
+              <p>先收集，不急着判断。以后再筛选、实验、推进。</p>
+            </div>
+          </div>
+          <div class="two-column">
+            <form id="ideaForm" class="panel stack-form">
+              <h3 data-title-key="ideasFormTitle">新增科研 idea</h3>
+              <label>标题<input id="ideaTitle" required placeholder="一句话抓住这个科研想法" /></label>
+              <label>来源
+                <select id="ideaSource">
+                  <option value="科研问题">科研问题</option>
+                  <option value="文献阅读">文献阅读</option>
+                  <option value="实验/仿真">实验/仿真</option>
+                  <option value="论文写作">论文写作</option>
+                  <option value="会议讨论">会议讨论</option>
+                </select>
+              </label>
+              <label>内容<textarea id="ideaBody" rows="6" placeholder="背景、可能用途、下一步验证"></textarea></label>
+              <button class="primary-button" type="submit">保存科研 idea</button>
+            </form>
+            <div class="idea-side">
+              <div class="panel">
+                <h3 data-title-key="ideasListTitle">科研 idea 池</h3>
+                <div id="ideaList" class="item-list"></div>
+              </div>
+              <div class="panel ai-panel">
+                <div class="section-head">
+                  <h3>AI 科研建议</h3>
+                  <span class="status-pill" id="ideaAiStatus">共用配置</span>
+                </div>
+                <label class="compact-form">想让 AI 关注什么
+                  <select id="ideaAiFocus">
+                    <option value="value">idea 价值和创新点</option>
+                    <option value="experiment">实验/仿真验证路径</option>
+                    <option value="paper">论文展开和图表设计</option>
+                    <option value="risk">风险、卡点和替代方案</option>
+                  </select>
+                </label>
+                <div class="button-row compact-form">
+                  <button id="askIdeaAiBtn" type="button">生成建议</button>
+                  <button id="copyIdeaPromptBtn" type="button">复制提示词</button>
+                </div>
+                <textarea id="ideaAiSuggestion" rows="8" placeholder="这里会显示 AI 给你的科研 idea 建议。"></textarea>
+                <p class="helper-text">这里复用设置页的 AI 配置。没有配置时，可以先复制提示词到 ChatGPT 网页版。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="settingsView">
+          <div class="view-heading">
+            <div>
+              <h2>设置</h2>
+              <p>云同步、标题、主题配色和备份都放在这里，日常页面保持清爽。</p>
+            </div>
+          </div>
+          <div class="settings-grid">
+            <section class="panel sync-panel">
+              <div class="section-head">
+                <h2 data-title-key="syncTitle">登录同步</h2>
+                <span class="status-pill" id="syncStatus">本地模式</span>
+              </div>
+              <div class="sync-guide">
+                <p><strong>最终你只需要记住邮箱和密码。</strong>换设备打开网站后，用同一个邮箱和密码登录，就能同步记录。</p>
+                <p>云数据库已经内置好了。手机、电脑打开同一个网页后，直接用邮箱和密码登录即可。</p>
+              </div>
+              <form id="authForm" class="stack-form compact-form">
+                <label>你的同步账号（邮箱）<input id="authEmail" type="email" autocomplete="email" placeholder="例如：gaonan94@zju.edu.cn" /></label>
+                <label>你的同步密码<input id="authPassword" type="password" autocomplete="current-password" placeholder="自己设置，至少 6 位" /></label>
+                <div class="button-row">
+                  <button id="signInBtn" type="submit">登录</button>
+                  <button id="signUpBtn" type="button">注册</button>
+                </div>
+              </form>
+              <div class="button-row">
+                <button id="syncBtn" type="button">同步</button>
+                <button id="signOutBtn" type="button">退出</button>
+              </div>
+              <p class="helper-text" id="cloudMessage">你可以先跳过云同步；等真的要多设备共用同一份记录时再设置。</p>
+              <details class="advanced-sync">
+                <summary>高级设置：通常不用打开</summary>
+                <div class="sync-guide">
+                  <ol>
+                    <li>打开 Supabase，新建免费项目。</li>
+                    <li>把 <code>supabase-schema.sql</code> 复制到 Supabase 的 SQL Editor 运行。</li>
+                    <li>在 Project Settings → API 复制 Project URL 和 anon public key。</li>
+                  </ol>
+                  <a class="link-button" href="https://supabase.com/dashboard/projects" target="_blank" rel="noreferrer">打开 Supabase</a>
+                </div>
+                <form id="cloudConfigForm" class="stack-form compact-form">
+                  <label>云数据库地址（Project URL，只填到 .supabase.co）<input id="supabaseUrl" placeholder="只填：https://xxxx.supabase.co" /></label>
+                  <label>公开访问密钥（anon public key）<input id="supabaseKey" type="password" placeholder="很长一串，以 eyJ 开头" /></label>
+                  <button class="secondary-button" type="submit">保存云数据库设置</button>
+                </form>
+              </details>
+            </section>
+
+            <section class="panel settings-panel">
+              <div class="section-head">
+                <h2 data-title-key="settingsTitle">标题设置</h2>
+                <button class="icon-button" id="resetTitlesBtn" title="恢复默认标题" aria-label="恢复默认标题">↺</button>
+              </div>
+              <form id="titleSettingsForm" class="stack-form compact-form title-settings-grid">
+                <label>主标题<input id="titleApp" data-title-input="appTitle" /></label>
+                <label>概览<input id="titleOverview" data-title-input="overviewTitle" /></label>
+                <label>快速记录<input id="titleQuick" data-title-input="quickTitle" /></label>
+                <label>科研<input id="titleResearch" data-title-input="researchTitle" /></label>
+                <label>健身<input id="titleFitness" data-title-input="fitnessTitle" /></label>
+                <label>英语<input id="titleEnglish" data-title-input="englishTitle" /></label>
+                <label>科研 Idea<input id="titleIdeas" data-title-input="ideasTitle" /></label>
+                <label>云同步<input id="titleSync" data-title-input="syncTitle" /></label>
+                <label>备份<input id="titleBackup" data-title-input="backupTitle" /></label>
+                <button class="secondary-button" type="submit">保存标题</button>
+              </form>
+            </section>
+
+            <section class="panel theme-panel">
+              <div class="section-head">
+                <h2>主题配色</h2>
+                <button class="icon-button" id="resetThemeBtn" title="恢复默认配色" aria-label="恢复默认配色">↺</button>
+              </div>
+              <div class="theme-presets" id="themePresets" aria-label="主题预设"></div>
+              <form id="themeSettingsForm" class="stack-form compact-form theme-settings-grid">
+                <label>主色<input id="themePrimary" data-theme-input="primary" type="color" /></label>
+                <label>强调色<input id="themeAccent" data-theme-input="accent" type="color" /></label>
+                <label>背景<input id="themeBg" data-theme-input="bg" type="color" /></label>
+                <label>文字<input id="themeInk" data-theme-input="ink" type="color" /></label>
+                <button class="secondary-button" type="submit">保存配色</button>
+              </form>
+            </section>
+
+            <section class="panel ai-settings-panel">
+              <div class="section-head">
+                <h2>AI 配置</h2>
+                <span class="status-pill" id="settingsAiStatus">未配置</span>
+              </div>
+              <p class="helper-text">英语建议和科研 idea 建议共用这里的外部 AI 设置。API Key 只保存在当前浏览器，不会导出，也不会云同步。</p>
+              <form id="aiSettingsForm" class="stack-form compact-form">
+                <label>接口地址<input id="aiBaseUrl" placeholder="https://api.openai.com/v1" /></label>
+                <label>模型<input id="aiModel" placeholder="gpt-5.5" /></label>
+                <label>API Key<input id="aiApiKey" type="password" placeholder="sk-..." /></label>
+                <button class="secondary-button" id="saveAiSettingsBtn" type="submit">保存 AI 配置</button>
+              </form>
+            </section>
+
+            <section class="panel data-panel">
+              <h2 data-title-key="backupTitle">备份</h2>
+              <p class="helper-text">导出会包含记录、标题和主题。AI API Key 不会导出。</p>
+              <div class="button-row">
+                <button id="exportBtn" type="button">导出</button>
+                <label class="file-button">
+                  导入
+                  <input id="importFile" type="file" accept="application/json" />
+                </label>
+              </div>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <template id="itemTemplate">
+      <article class="record-item">
+        <div class="record-main"></div>
+        <div class="record-actions">
+          <button class="small-button done-button" type="button">完成</button>
+          <button class="small-button delete-button" type="button">删除</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

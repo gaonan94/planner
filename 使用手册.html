@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>科研健身英语规划台使用手册</title>
+    <style>
+      :root {
+        --bg: #fbf7f5;
+        --ink: #2f2a2d;
+        --muted: #82767b;
+        --line: #eadde2;
+        --primary: #d86f93;
+        --accent: #7e9f90;
+        --surface: #ffffff;
+        --soft: #fff0f5;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #fff3f8 0%, #f7f7ef 54%, #eef6ff 100%);
+        color: var(--ink);
+        font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+        line-height: 1.7;
+      }
+
+      .manual {
+        width: min(1080px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 34px 0 52px;
+      }
+
+      .hero {
+        padding: 30px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 20px 50px rgba(155, 121, 132, 0.14);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(28px, 4vw, 42px);
+        line-height: 1.15;
+      }
+
+      h2 {
+        margin-top: 34px;
+        font-size: 24px;
+      }
+
+      h3 {
+        font-size: 18px;
+      }
+
+      .hero p,
+      .section-intro,
+      .card p {
+        color: var(--muted);
+      }
+
+      .hero p {
+        margin-top: 12px;
+        max-width: 760px;
+      }
+
+      .quick-map {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .quick-map div,
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.88);
+        padding: 16px;
+      }
+
+      .quick-map strong {
+        display: block;
+        color: var(--primary);
+      }
+
+      .section-intro {
+        margin-top: 6px;
+      }
+
+      .guide-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 16px;
+      }
+
+      .wide {
+        grid-column: 1 / -1;
+      }
+
+      .visual {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+      }
+
+      .steps {
+        margin: 14px 0 0;
+        padding-left: 22px;
+      }
+
+      .steps li {
+        margin: 6px 0;
+      }
+
+      .note {
+        margin-top: 14px;
+        border-left: 4px solid var(--accent);
+        border-radius: 12px;
+        background: #f4fbf5;
+        padding: 12px 14px;
+        color: #4f6f60;
+      }
+
+      code {
+        border-radius: 8px;
+        background: var(--soft);
+        color: #a94f70;
+        padding: 2px 6px;
+      }
+
+      @media (max-width: 800px) {
+        .guide-grid,
+        .quick-map {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="manual">
+      <section class="hero">
+        <h1>科研健身英语规划台<br />简明使用手册</h1>
+        <p>这个工具适合每天打开 3-5 分钟：先看今日概览，再快速记录，细节分别进入科研、健身、英语和科研 Idea 页面补全。</p>
+        <div class="quick-map">
+          <div><strong>科研</strong>今日任务、短期项目、长期目标</div>
+          <div><strong>健身</strong>训练内容、状态、体重</div>
+          <div><strong>英语</strong>每周两次学习和 AI 建议</div>
+          <div><strong>设置</strong>同步、标题、主题、备份</div>
+        </div>
+      </section>
+
+      <h2>1. 每天怎么用</h2>
+      <p class="section-intro">打开首页后，左侧只处理当天最常用的动作。</p>
+      <div class="guide-grid">
+        <article class="card wide">
+          <h3>首页结构</h3>
+          <svg class="visual" viewBox="0 0 980 420" role="img" aria-label="首页结构示意图">
+            <rect width="980" height="420" rx="24" fill="#fbf7f5" />
+            <rect x="28" y="28" width="280" height="364" rx="20" fill="#fff" stroke="#eadde2" />
+            <rect x="336" y="28" width="616" height="64" rx="18" fill="#fff" stroke="#eadde2" />
+            <rect x="336" y="116" width="616" height="276" rx="20" fill="#fff" stroke="#eadde2" />
+            <circle cx="62" cy="62" r="22" fill="#d86f93" />
+            <text x="94" y="58" font-size="22" font-weight="700" fill="#2f2a2d">你的自定义标题</text>
+            <text x="94" y="82" font-size="14" fill="#82767b">今天日期</text>
+            <rect x="52" y="118" width="232" height="96" rx="16" fill="#fff0f5" />
+            <text x="70" y="150" font-size="19" font-weight="700" fill="#2f2a2d">今日概览</text>
+            <text x="70" y="180" font-size="14" fill="#82767b">科研 / 健身 / 英语 / Idea 数量</text>
+            <rect x="52" y="238" width="232" height="122" rx="16" fill="#f4fbf5" />
+            <text x="70" y="270" font-size="19" font-weight="700" fill="#2f2a2d">快速记录</text>
+            <text x="70" y="300" font-size="14" fill="#82767b">选类型，写一句话，点添加</text>
+            <text x="362" y="68" font-size="18" font-weight="700" fill="#d86f93">科研</text>
+            <text x="456" y="68" font-size="18" fill="#82767b">健身</text>
+            <text x="550" y="68" font-size="18" fill="#82767b">英语</text>
+            <text x="644" y="68" font-size="18" fill="#82767b">科研 Idea</text>
+            <text x="780" y="68" font-size="18" fill="#82767b">设置</text>
+            <rect x="362" y="150" width="230" height="198" rx="16" fill="#fff8fb" stroke="#eadde2" />
+            <rect x="622" y="150" width="294" height="198" rx="16" fill="#ffffff" stroke="#eadde2" />
+            <text x="386" y="190" font-size="20" font-weight="700" fill="#2f2a2d">新增记录</text>
+            <text x="386" y="226" font-size="14" fill="#82767b">填写表单并保存</text>
+            <text x="646" y="190" font-size="20" font-weight="700" fill="#2f2a2d">记录列表</text>
+            <text x="646" y="226" font-size="14" fill="#82767b">完成、恢复、删除</text>
+            <path d="M300 288 C360 288 350 250 390 246" fill="none" stroke="#d86f93" stroke-width="4" stroke-linecap="round" />
+            <circle cx="390" cy="246" r="7" fill="#d86f93" />
+            <text x="330" y="314" font-size="14" font-weight="700" fill="#b85578">快速记录会进入对应页面</text>
+          </svg>
+          <ol class="steps">
+            <li>先看左侧“今日概览”，确认今天有没有科研待办、健身记录、英语进度。</li>
+            <li>有临时想法时，用“快速记录”先记下来，不必马上整理。</li>
+            <li>需要补充细节时，进入顶部对应标签页。</li>
+          </ol>
+        </article>
+      </div>
+
+      <h2>2. 科研记录</h2>
+      <p class="section-intro">科研页分成今日、短期项目、长期目标，适合把每天行动和长期方向接起来。</p>
+      <div class="guide-grid">
+        <article class="card">
+          <h3>新增科研任务</h3>
+          <svg class="visual" viewBox="0 0 480 320" role="img" aria-label="科研任务填写示意图">
+            <rect width="480" height="320" rx="20" fill="#fff" />
+            <rect x="28" y="28" width="190" height="264" rx="16" fill="#fff8fb" stroke="#eadde2" />
+            <text x="48" y="64" font-size="19" font-weight="700" fill="#2f2a2d">新增科研任务</text>
+            <rect x="48" y="88" width="150" height="34" rx="10" fill="#fff" stroke="#eadde2" />
+            <text x="58" y="110" font-size="13" fill="#82767b">任务标题</text>
+            <rect x="48" y="144" width="150" height="34" rx="10" fill="#fff" stroke="#eadde2" />
+            <text x="58" y="166" font-size="13" fill="#82767b">今日 / 短期 / 长期</text>
+            <rect x="48" y="200" width="150" height="54" rx="10" fill="#fff" stroke="#eadde2" />
+            <text x="58" y="230" font-size="13" fill="#82767b">进展、卡点、下一步</text>
+            <rect x="262" y="60" width="162" height="54" rx="14" fill="#fff0f5" />
+            <text x="282" y="94" font-size="15" fill="#b85578">选好层级再保存</text>
+            <path d="M252 88 L212 104" stroke="#d86f93" stroke-width="4" stroke-linecap="round" />
+          </svg>
+          <ol class="steps">
+            <li>任务写成可以行动的一句话。</li>
+            <li>层级选择“今日、短期项目、长期目标”。</li>
+            <li>备注里写进展、卡点和下一步。</li>
+          </ol>
+        </article>
+
+        <article class="card">
+          <h3>科研 Idea</h3>
+          <svg class="visual" viewBox="0 0 480 320" role="img" aria-label="科研 idea 页面示意图">
+            <rect width="480" height="320" rx="20" fill="#fff" />
+            <rect x="28" y="28" width="190" height="264" rx="16" fill="#f4fbf5" stroke="#d7eadc" />
+            <text x="48" y="64" font-size="19" font-weight="700" fill="#2f2a2d">新增科研 idea</text>
+            <text x="48" y="102" font-size="13" fill="#82767b">标题：一句话抓住想法</text>
+            <text x="48" y="138" font-size="13" fill="#82767b">来源：文献 / 仿真 / 会议</text>
+            <text x="48" y="174" font-size="13" fill="#82767b">内容：背景和验证方式</text>
+            <rect x="252" y="50" width="170" height="62" rx="14" fill="#fff8fb" stroke="#eadde2" />
+            <rect x="252" y="132" width="170" height="62" rx="14" fill="#fff8fb" stroke="#eadde2" />
+            <rect x="252" y="214" width="170" height="62" rx="14" fill="#fff8fb" stroke="#eadde2" />
+            <text x="272" y="86" font-size="14" fill="#2f2a2d">idea 1</text>
+            <text x="272" y="168" font-size="14" fill="#2f2a2d">idea 2</text>
+            <text x="272" y="250" font-size="14" fill="#2f2a2d">idea 3</text>
+          </svg>
+          <ol class="steps">
+            <li>看到论文、做仿真、开会突然想到的点都放这里。</li>
+            <li>不用一开始判断好坏，先记录，再筛选。</li>
+          </ol>
+        </article>
+      </div>
+
+      <h2>3. 健身和英语</h2>
+      <div class="guide-grid">
+        <article class="card">
+          <h3>健身记录</h3>
+          <svg class="visual" viewBox="0 0 480 300" role="img" aria-label="健身记录示意图">
+            <rect width="480" height="300" rx="20" fill="#fff" />
+            <rect x="34" y="34" width="176" height="232" rx="16" fill="#fff8fb" stroke="#eadde2" />
+            <text x="56" y="72" font-size="19" font-weight="700" fill="#2f2a2d">新增健身记录</text>
+            <text x="56" y="112" font-size="14" fill="#82767b">日期</text>
+            <text x="56" y="148" font-size="14" fill="#82767b">体重 kg</text>
+            <text x="56" y="184" font-size="14" fill="#82767b">训练内容</text>
+            <text x="56" y="220" font-size="14" fill="#82767b">完成 / 计划 / 休息</text>
+            <rect x="258" y="76" width="158" height="148" rx="20" fill="#f4fbf5" />
+            <text x="286" y="122" font-size="18" font-weight="700" fill="#4f6f60">建议每天</text>
+            <text x="286" y="158" font-size="14" fill="#4f6f60">至少记录体重或训练</text>
+            <text x="286" y="190" font-size="14" fill="#4f6f60">休息日也可以记</text>
+          </svg>
+          <ol class="steps">
+            <li>训练日写具体内容，比如“力量 45 分钟 + 拉伸”。</li>
+            <li>休息日也可以记录成“休息”，方便看节奏。</li>
+          </ol>
+        </article>
+
+        <article class="card">
+          <h3>英语学习和 AI 建议</h3>
+          <svg class="visual" viewBox="0 0 480 300" role="img" aria-label="英语 AI 建议示意图">
+            <rect width="480" height="300" rx="20" fill="#fff" />
+            <rect x="28" y="34" width="190" height="232" rx="16" fill="#fff8fb" stroke="#eadde2" />
+            <text x="48" y="70" font-size="18" font-weight="700" fill="#2f2a2d">英语记录</text>
+            <text x="48" y="108" font-size="13" fill="#82767b">话题</text>
+            <text x="48" y="142" font-size="13" fill="#82767b">新单词</text>
+            <text x="48" y="176" font-size="13" fill="#82767b">句式</text>
+            <text x="48" y="210" font-size="13" fill="#82767b">复盘</text>
+            <rect x="260" y="34" width="190" height="232" rx="16" fill="#f4fbf5" stroke="#d7eadc" />
+            <text x="280" y="70" font-size="18" font-weight="700" fill="#2f2a2d">AI 英语建议</text>
+            <text x="280" y="108" font-size="13" fill="#4f6f60">填 API Key</text>
+            <text x="280" y="142" font-size="13" fill="#4f6f60">选择关注方向</text>
+            <text x="280" y="176" font-size="13" fill="#4f6f60">点生成建议</text>
+            <text x="280" y="210" font-size="13" fill="#4f6f60">或复制提示词</text>
+            <path d="M220 150 L254 150" stroke="#d86f93" stroke-width="4" stroke-linecap="round" />
+            <path d="M246 142 L254 150 L246 158" fill="none" stroke="#d86f93" stroke-width="4" stroke-linecap="round" />
+          </svg>
+          <ol class="steps">
+            <li>先填写本次英语学习内容，尤其是话题、单词、句式。</li>
+            <li>在右侧 AI 区填 DeepSeek API Key，点“生成建议”。</li>
+            <li>如果请求失败，点“复制提示词”，粘贴到 DeepSeek 网页版。</li>
+          </ol>
+        </article>
+      </div>
+
+      <h2>4. 设置在哪里</h2>
+      <p class="section-intro">主页看不到复杂设置。需要修改同步、标题、配色、备份时，进入顶部“设置”。</p>
+      <div class="guide-grid">
+        <article class="card wide">
+          <h3>设置页结构</h3>
+          <svg class="visual" viewBox="0 0 980 380" role="img" aria-label="设置页示意图">
+            <rect width="980" height="380" rx="24" fill="#fbf7f5" />
+            <rect x="40" y="36" width="900" height="58" rx="18" fill="#fff" stroke="#eadde2" />
+            <text x="72" y="72" font-size="18" fill="#82767b">科研</text>
+            <text x="164" y="72" font-size="18" fill="#82767b">健身</text>
+            <text x="256" y="72" font-size="18" fill="#82767b">英语</text>
+            <text x="348" y="72" font-size="18" fill="#82767b">科研 Idea</text>
+            <rect x="486" y="48" width="94" height="34" rx="14" fill="#fff0f5" />
+            <text x="515" y="71" font-size="18" font-weight="700" fill="#b85578">设置</text>
+            <rect x="60" y="130" width="390" height="86" rx="18" fill="#fff" stroke="#eadde2" />
+            <rect x="530" y="130" width="390" height="86" rx="18" fill="#fff" stroke="#eadde2" />
+            <rect x="60" y="246" width="390" height="86" rx="18" fill="#fff" stroke="#eadde2" />
+            <rect x="530" y="246" width="390" height="86" rx="18" fill="#fff" stroke="#eadde2" />
+            <text x="88" y="180" font-size="22" font-weight="700" fill="#2f2a2d">云同步</text>
+            <text x="558" y="180" font-size="22" font-weight="700" fill="#2f2a2d">标题设置</text>
+            <text x="88" y="296" font-size="22" font-weight="700" fill="#2f2a2d">主题配色</text>
+            <text x="558" y="296" font-size="22" font-weight="700" fill="#2f2a2d">备份</text>
+          </svg>
+          <ol class="steps">
+            <li>想跨设备使用：进入“设置 → 云同步”。</li>
+            <li>想改页面名称：进入“设置 → 标题设置”。</li>
+            <li>想换颜色：进入“设置 → 主题配色”。</li>
+            <li>想迁移数据：进入“设置 → 备份”。</li>
+          </ol>
+          <div class="note">建议：刚开始用时不必先配置云同步。先本地用几天，等记录方式顺手了，再去设置页打开同步。</div>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>
