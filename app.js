@@ -15,6 +15,11 @@ const initialState = {
   ideas: []
 };
 
+const defaultCloudConfig = {
+  url: "https://laorqicotmbrkbtxnodx.supabase.co",
+  key: "sb_publishable_57BNktBbFB5wNfodtPQAQQ_FV91yTNP"
+};
+
 const defaultTitles = {
   appTitle: "日常规划台",
   overviewTitle: "今日概览",
@@ -143,14 +148,27 @@ function saveState(options = {}) {
 
 function loadCloudConfig() {
   try {
-    return JSON.parse(localStorage.getItem(CLOUD_CONFIG_KEY)) || { url: "", key: "" };
+    const saved = JSON.parse(localStorage.getItem(CLOUD_CONFIG_KEY));
+    return saved?.url && saved?.key ? saved : { ...defaultCloudConfig };
   } catch {
-    return { url: "", key: "" };
+    return { ...defaultCloudConfig };
   }
 }
 
 function saveCloudConfig() {
   localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify(cloudConfig));
+}
+
+function normalizeSupabaseUrl(value) {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+
+  try {
+    const parsed = new URL(trimmed);
+    return parsed.origin;
+  } catch {
+    return trimmed.replace(/\/+$/, "");
+  }
 }
 
 function loadTitleSettings() {
@@ -397,6 +415,58 @@ function fitnessMarkup(item) {
   `;
 }
 
+function renderWeightModule() {
+  const entries = state.fitness
+    .filter((item) => item.weight !== "" && item.weight !== null && item.weight !== undefined)
+    .map((item) => ({
+      ...item,
+      numericWeight: Number(item.weight)
+    }))
+    .filter((item) => Number.isFinite(item.numericWeight))
+    .sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
+
+  const list = $("#weightList");
+  list.innerHTML = "";
+
+  if (!entries.length) {
+    $("#latestWeight").textContent = "--";
+    $("#weightChange").textContent = "--";
+    $("#weightTrend").textContent = "暂无";
+    $("#weightTrend").dataset.tone = "pending";
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "还没有体重记录";
+    list.appendChild(empty);
+    return;
+  }
+
+  const latest = entries[0];
+  const previous = entries[1];
+  $("#latestWeight").textContent = latest.numericWeight.toFixed(1);
+
+  if (previous) {
+    const diff = latest.numericWeight - previous.numericWeight;
+    const sign = diff > 0 ? "+" : "";
+    $("#weightChange").textContent = `${sign}${diff.toFixed(1)}`;
+    $("#weightTrend").textContent = diff === 0 ? "持平" : diff > 0 ? "上升" : "下降";
+    $("#weightTrend").dataset.tone = diff <= 0 ? "online" : "pending";
+  } else {
+    $("#weightChange").textContent = "--";
+    $("#weightTrend").textContent = "首条";
+    $("#weightTrend").dataset.tone = "pending";
+  }
+
+  entries.slice(0, 7).forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "weight-row";
+    row.innerHTML = `
+      <span>${text(item.date || item.createdAt.slice(0, 10))}</span>
+      <strong>${text(item.numericWeight.toFixed(1))} kg</strong>
+    `;
+    list.appendChild(row);
+  });
+}
+
 function englishMarkup(item) {
   return `
     <div class="record-title">${text(item.date)} · ${text(item.topic)}</div>
@@ -446,6 +516,7 @@ function render() {
     researchMarkup,
     { empty: "长期目标先写一个也很好" }
   );
+  renderWeightModule();
   renderList("#fitnessList", state.fitness, "fitness", fitnessMarkup);
   renderList("#englishList", state.english, "english", englishMarkup);
   renderList("#ideaList", state.ideas, "ideas", ideaMarkup);
@@ -797,7 +868,16 @@ async function runAiRequest({ prompt, outputSelector, statusSelector, systemProm
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      let errorDetail = "";
+      try {
+        const errorBody = await response.json();
+        errorDetail = errorBody.error?.message || "";
+      } catch {
+        errorDetail = await response.text().catch(() => "");
+      }
+      const error = new Error(errorDetail || `HTTP ${response.status}`);
+      error.status = response.status;
+      throw error;
     }
 
     const data = await response.json();
@@ -808,6 +888,10 @@ async function runAiRequest({ prompt, outputSelector, statusSelector, systemProm
   } catch (error) {
     $(statusSelector).textContent = "失败";
     $(statusSelector).dataset.tone = "error";
+    if (error.status === 429) {
+      $(outputSelector).value = `请求失败：HTTP 429\n\n这通常不是 API Key 没填，而是 OpenAI 账号当前额度、账单、项目限额或请求频率不够。\n\n你可以这样检查：\n1. 打开 https://platform.openai.com/settings/organization/billing\n2. 确认 API 账号已经开通计费或有可用额度\n3. 打开 https://platform.openai.com/settings/organization/limits\n4. 看当前项目/模型是否还有可用限额\n5. 等 1 分钟后再试一次\n\n临时替代：点“复制提示词”，粘贴到 ChatGPT 网页版继续用。\n\nOpenAI 返回信息：${error.message}`;
+      return;
+    }
     $(outputSelector).value = `请求失败：${error.message}\n\n可能是浏览器跨域限制、API Key 错误、额度不足，或接口地址变化。你可以点“复制提示词”，粘贴到 ChatGPT 网页版继续用。`;
   }
 }
@@ -819,9 +903,10 @@ function bindCloudControls() {
   $("#cloudConfigForm").addEventListener("submit", async (event) => {
     event.preventDefault();
     cloudConfig = {
-      url: $("#supabaseUrl").value.trim(),
+      url: normalizeSupabaseUrl($("#supabaseUrl").value),
       key: $("#supabaseKey").value.trim()
     };
+    $("#supabaseUrl").value = cloudConfig.url;
     saveCloudConfig();
     await setupCloud();
   });

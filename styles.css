@@ -495,9 +495,58 @@ textarea:focus {
 }
 
 .english-side,
-.idea-side {
+.idea-side,
+.fitness-side {
   display: grid;
   gap: 16px;
+}
+
+.weight-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.weight-summary > div {
+  border: 1px solid rgba(216, 111, 147, 0.12);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #fff8fb 0%, #fff 70%);
+  padding: 13px;
+}
+
+.weight-value {
+  display: block;
+  color: var(--primary);
+  font-size: 32px;
+  font-weight: 840;
+  line-height: 1;
+}
+
+.weight-value.small {
+  font-size: 26px;
+}
+
+.weight-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.weight-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.68);
+  padding: 9px 11px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.weight-row strong {
+  color: var(--ink);
 }
 
 .ai-panel textarea {

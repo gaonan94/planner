@@ -12,7 +12,7 @@
     <main class="app-shell">
       <aside class="sidebar">
         <div class="brand">
-          <span class="brand-mark">R</span>
+          <span class="brand-mark">K</span>
           <div>
             <h1 data-title-key="appTitle">日常规划台</h1>
             <p id="todayLabel"></p>
@@ -135,9 +135,28 @@
               </label>
               <button class="primary-button" type="submit">保存记录</button>
             </form>
-            <div class="panel">
-              <h3 data-title-key="fitnessListTitle">最近记录</h3>
-              <div id="fitnessList" class="item-list"></div>
+            <div class="fitness-side">
+              <div class="panel weight-panel">
+                <div class="section-head">
+                  <h3>体重模块</h3>
+                  <span class="status-pill" id="weightTrend">暂无</span>
+                </div>
+                <div class="weight-summary">
+                  <div>
+                    <span class="weight-value" id="latestWeight">--</span>
+                    <span class="metric-label">最新体重 kg</span>
+                  </div>
+                  <div>
+                    <span class="weight-value small" id="weightChange">--</span>
+                    <span class="metric-label">较上一条</span>
+                  </div>
+                </div>
+                <div id="weightList" class="weight-list"></div>
+              </div>
+              <div class="panel">
+                <h3 data-title-key="fitnessListTitle">最近记录</h3>
+                <div id="fitnessList" class="item-list"></div>
+              </div>
             </div>
           </div>
         </section>
@@ -257,7 +276,7 @@
               </div>
               <div class="sync-guide">
                 <p><strong>最终你只需要记住邮箱和密码。</strong>换设备打开网站后，用同一个邮箱和密码登录，就能同步记录。</p>
-                <p>第一次使用前，需要先在下面“高级设置”里接一次云数据库；接好以后就不用再看 URL 和 key 了。</p>
+                <p>云数据库已经内置好了。手机、电脑打开同一个网页后，直接用邮箱和密码登录即可。</p>
               </div>
               <form id="authForm" class="stack-form compact-form">
                 <label>你的同步账号（邮箱）<input id="authEmail" type="email" autocomplete="email" placeholder="例如：gaonan94@zju.edu.cn" /></label>
@@ -273,7 +292,7 @@
               </div>
               <p class="helper-text" id="cloudMessage">你可以先跳过云同步；等真的要多设备共用同一份记录时再设置。</p>
               <details class="advanced-sync">
-                <summary>高级设置：第一次接云数据库才需要打开</summary>
+                <summary>高级设置：通常不用打开</summary>
                 <div class="sync-guide">
                   <ol>
                     <li>打开 Supabase，新建免费项目。</li>
@@ -283,7 +302,7 @@
                   <a class="link-button" href="https://supabase.com/dashboard/projects" target="_blank" rel="noreferrer">打开 Supabase</a>
                 </div>
                 <form id="cloudConfigForm" class="stack-form compact-form">
-                  <label>云数据库地址（Project URL）<input id="supabaseUrl" placeholder="像这样：https://xxxx.supabase.co" /></label>
+                  <label>云数据库地址（Project URL，只填到 .supabase.co）<input id="supabaseUrl" placeholder="只填：https://xxxx.supabase.co" /></label>
                   <label>公开访问密钥（anon public key）<input id="supabaseKey" type="password" placeholder="很长一串，以 eyJ 开头" /></label>
                   <button class="secondary-button" type="submit">保存云数据库设置</button>
                 </form>
