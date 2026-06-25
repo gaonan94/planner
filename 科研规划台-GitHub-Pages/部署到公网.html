@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>部署到公网说明</title>
+    <style>
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #fff3f8 0%, #f7f7ef 54%, #eef6ff 100%);
+        color: #2f2a2d;
+        font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        line-height: 1.7;
+      }
+      main {
+        width: min(920px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 38px 0 54px;
+      }
+      section {
+        margin-top: 18px;
+        border: 1px solid #eadde2;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.86);
+        padding: 22px;
+        box-shadow: 0 18px 46px rgba(155, 121, 132, 0.13);
+      }
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+      h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        line-height: 1.15;
+      }
+      h2 {
+        margin-bottom: 8px;
+        font-size: 22px;
+      }
+      ol {
+        margin: 12px 0 0;
+        padding-left: 22px;
+      }
+      li {
+        margin: 8px 0;
+      }
+      code {
+        border-radius: 8px;
+        background: #fff0f5;
+        color: #a94f70;
+        padding: 2px 6px;
+      }
+      .hero {
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+      }
+      .note {
+        margin-top: 12px;
+        border-left: 4px solid #7e9f90;
+        border-radius: 12px;
+        background: #f4fbf5;
+        padding: 12px 14px;
+        color: #4f6f60;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <h1>把规划台部署成<br />哪里都能打开的网站</h1>
+        <p>推荐用 Netlify，最省事：把部署包拖进去，就会得到一个公网网址。</p>
+      </section>
+
+      <section>
+        <h2>最快方式：Netlify 拖拽部署</h2>
+        <ol>
+          <li>打开 <code>https://app.netlify.com/drop</code>。</li>
+          <li>登录或注册 Netlify。</li>
+          <li>把 <code>科研规划台-公网部署包.zip</code> 拖进去。</li>
+          <li>等它上传完成，Netlify 会给你一个 <code>https://...</code> 网址。</li>
+          <li>手机、平板、学校电脑、家里电脑都打开这个网址即可。</li>
+        </ol>
+        <div class="note">如果你要保存跨设备数据，还要在应用“设置 → 云同步”里配置 Supabase。网站公网访问和数据同步是两件事。</div>
+      </section>
+
+      <section>
+        <h2>也可以用 Vercel / Cloudflare Pages</h2>
+        <ol>
+          <li>新建静态网站项目。</li>
+          <li>上传这个文件夹或部署包。</li>
+          <li>构建命令留空。</li>
+          <li>输出目录填 <code>.</code> 或留默认静态目录。</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>上线后第一次要做什么</h2>
+        <ol>
+          <li>打开公网网址。</li>
+          <li>进入“设置 → 云同步”。</li>
+          <li>填 Supabase URL 和 anon key。</li>
+          <li>注册/登录邮箱账号。</li>
+          <li>点“同步”。</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>如果要用 OpenAI 一键生成建议</h2>
+        <ol>
+          <li>打开 <code>https://platform.openai.com/api-keys</code>。</li>
+          <li>登录 OpenAI 账号，创建一个 API Key。</li>
+          <li>回到规划台，进入 <code>设置 → AI 配置</code>。</li>
+          <li>接口地址填 <code>https://api.openai.com/v1</code>。</li>
+          <li>模型填 <code>gpt-5.5</code>。</li>
+          <li>粘贴 API Key，保存。</li>
+        </ol>
+      </section>
+    </main>
+  </body>
+</html>
